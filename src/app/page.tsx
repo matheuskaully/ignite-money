@@ -1,33 +1,45 @@
-import Header from '@/components/header'
+'use client'
+
 import { PriceHighlight } from '@/components/price-highlight'
+import { useTransaction } from '@/contexts/transactions-context'
+import { format } from 'date-fns'
+import Header from '@/components/header'
 import SearchForm from '@/components/search-form'
 import Summary from '@/components/summary'
 
 export default function Home() {
+  const { transactions } = useTransaction()
+
   return (
     <div>
       <Header />
       <Summary />
 
-      <main className="w-full max-w-6xl mt-16 px-6 mx-auto space-y-6">
+      <main className="mx-auto mt-16 w-full max-w-6xl space-y-6 px-6">
         <SearchForm />
 
         <table className="w-full border-collapse border-spacing-2">
-          <tbody className="space-y-2">
-            {Array.from({ length: 5 }).map((_, index) => {
+          <tbody className="w-full space-y-2">
+            {transactions.map((transaction) => {
               return (
                 <tr
-                  key={index}
-                  className="flex bg-zinc-800 hover:bg-zinc-800/80 rounded-md"
+                  key={transaction.id}
+                  className="flex w-full rounded-md bg-zinc-800 hover:bg-zinc-800/80"
                 >
-                  <td className="py-5 px-8 flex-1">Desenvolvimento de site</td>
-                  <td className="py-5 px-8">
-                    <PriceHighlight variant="income">
-                      R$ 32.001,00
+                  <td className="flex-1 px-8 py-5">
+                    {transaction.description}
+                  </td>
+                  <td className="px-8 py-5 text-left">
+                    <PriceHighlight variant={transaction.type}>
+                      R$ {transaction.price}
                     </PriceHighlight>
                   </td>
-                  <td className="py-5 px-8">Venda</td>
-                  <td className="py-5 px-8 ">28/06/2024</td>
+                  <td className="px-8 py-5 text-left">
+                    {transaction.category}
+                  </td>
+                  <td className="px-8 py-5 text-left">
+                    {format(transaction.createdAt, 'dd/MM/yyyy')}
+                  </td>
                 </tr>
               )
             })}

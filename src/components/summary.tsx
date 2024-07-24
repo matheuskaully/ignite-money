@@ -2,32 +2,32 @@ import { ArrowDownCircle, ArrowUpCircle, DollarSign } from 'lucide-react'
 
 export default function Summary() {
   return (
-    <section className="w-full max-w-6xl mx-auto px-6 grid grid-cols-3 gap-2 -mt-20">
-      <div className="bg-zinc-800 rounded-md p-8 shadow-shape">
+    <section className="mx-auto -mt-20 grid w-full max-w-6xl grid-cols-3 gap-2 px-6">
+      <div className="rounded-md bg-zinc-800 p-8 shadow-shape">
         <header className="flex items-center justify-between text-zinc-300">
           <span>Entradas</span>
           <ArrowUpCircle className="size-8 text-emerald-500" />
         </header>
 
-        <strong className="block mt-4 text-4xl">R$ 17.400,00</strong>
+        <strong className="mt-4 block text-4xl">R$ 17.400,00</strong>
       </div>
 
-      <div className="bg-zinc-800 rounded-md p-8 shadow-shape">
+      <div className="rounded-md bg-zinc-800 p-8 shadow-shape">
         <header className="flex items-center justify-between text-zinc-300">
           <span>Saídas</span>
           <ArrowDownCircle className="size-8 text-red-500" />
         </header>
 
-        <strong className="block mt-4 text-4xl">R$ 5.120,80</strong>
+        <strong className="mt-4 block text-4xl">R$ 5.120,80</strong>
       </div>
 
-      <div className="bg-emerald-600 rounded-md p-8 shadow-shape">
+      <div className="rounded-md bg-emerald-600 p-8 shadow-shape">
         <header className="flex items-center justify-between text-zinc-300">
           <span>Total</span>
           <DollarSign className="size-8 text-white" />
         </header>
 
-        <strong className="block mt-4 text-4xl">R$ 48.090,27</strong>
+        <strong className="mt-4 block text-4xl">R$ 48.090,27</strong>
       </div>
     </section>
   )

@@ -5,11 +5,11 @@ import NewTransactionModal from './new-transaction-modal'
 
 export default function Header() {
   return (
-    <header className="bg-zinc-900 pt-10 pb-28 shadow-shape">
-      <div className="w-full max-w-6xl mx-auto px-6 flex justify-between items-center">
-        <div className="flex gap-2 items-center">
-          <Image src={logo} alt="dt money" className="w-12 h-12" />
-          <span className="font-light text-3xl text-zinc-300">
+    <header className="bg-zinc-900 pb-28 pt-10 shadow-shape">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6">
+        <div className="flex items-center gap-2">
+          <Image src={logo} alt="dt money" className="h-12 w-12" />
+          <span className="text-3xl font-light text-zinc-300">
             ignite
             <span className="font-bold text-white">m</span>oney.
           </span>
@@ -17,7 +17,7 @@ export default function Header() {
 
         <Dialog.Root>
           <Dialog.Trigger asChild>
-            <button className="h-12 bg-emerald-500 text-white font-bold rounded-md px-5 hover:cursor-pointer hover:bg-emerald-700 transition-colors duration-200">
+            <button className="h-12 rounded-md bg-emerald-500 px-5 font-bold text-white transition-colors duration-200 hover:cursor-pointer hover:bg-emerald-700">
               Nova transação
             </button>
           </Dialog.Trigger>

@@ -1,0 +1,84 @@
+{
+  "transactions": [
+    {
+        "id": 1,
+        "description": "Smartphone Samsung Galaxy s24+ 480gb",
+        "type": "outcome",
+        "category": "Compra",
+        "price": 5899,
+        "createdAt": "2024-07-24T19:06:26.097Z"
+    },
+    {
+        "id": 2,
+        "description": "Monitor Asus Tuf VG249Q 144hz Gaming",
+        "type": "income",
+        "category": "Venda",
+        "price": 1299,
+        "createdAt": "2024-07-21T12:06:26.097Z"
+    },
+    {
+        "id": 3,
+        "description": "Laptop Dell XPS 13",
+        "type": "outcome",
+        "category": "Compra",
+        "price": 7899,
+        "createdAt": "2024-07-18T08:30:00.000Z"
+    },
+    {
+        "id": 4,
+        "description": "Headset HyperX Cloud II",
+        "type": "income",
+        "category": "Venda",
+        "price": 499,
+        "createdAt": "2024-07-20T10:15:00.000Z"
+    },
+    {
+        "id": 5,
+        "description": "Teclado Mecânico Logitech G Pro",
+        "type": "outcome",
+        "category": "Compra",
+        "price": 699,
+        "createdAt": "2024-07-22T14:45:00.000Z"
+    },
+    {
+        "id": 6,
+        "description": "Mouse Razer DeathAdder Elite",
+        "type": "income",
+        "category": "Venda",
+        "price": 399,
+        "createdAt": "2024-07-19T09:00:00.000Z"
+    },
+    {
+        "id": 7,
+        "description": "Monitor LG UltraWide 34\"",
+        "type": "outcome",
+        "category": "Compra",
+        "price": 2499,
+        "createdAt": "2024-07-16T11:25:00.000Z"
+    },
+    {
+        "id": 8,
+        "description": "Cadeira Gamer DXRacer",
+        "type": "income",
+        "category": "Venda",
+        "price": 1299,
+        "createdAt": "2024-07-23T13:40:00.000Z"
+    },
+    {
+        "id": 9,
+        "description": "Tablet Apple iPad Pro 12.9\"",
+        "type": "outcome",
+        "category": "Compra",
+        "price": 10999,
+        "createdAt": "2024-07-17T15:50:00.000Z"
+    },
+    {
+        "id": 10,
+        "description": "Smartwatch Garmin Fenix 6",
+        "type": "income",
+        "category": "Venda",
+        "price": 2999,
+        "createdAt": "2024-07-21T17:05:00.000Z"
+    }
+  ] 
+}
