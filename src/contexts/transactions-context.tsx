@@ -1,3 +1,5 @@
+'use client'
+
 import {
   ReactNode,
   createContext,
@@ -27,6 +29,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
   async function loadTransactions() {
     const response = await fetch('http://localhost:3333/transactions')
     const data = await response.json()
+
     setTransactions(data)
   }
 
@@ -43,6 +46,7 @@ export function TransactionsProvider({ children }: { children: ReactNode }) {
 
 export function useTransaction(): TransactionContextType {
   const context = useContext(TransactionsContext)
+
   if (!context) {
     throw new Error('error')
   }
