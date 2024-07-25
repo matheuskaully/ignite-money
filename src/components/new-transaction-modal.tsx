@@ -1,15 +1,39 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as RadioGroup from '@radix-ui/react-radio-group'
 import { CircleArrowDown, CircleArrowUp, X } from 'lucide-react'
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import * as z from 'zod'
+
+const newTransactionFormSchema = z.object({
+  description: z.string(),
+  price: z.number(),
+  category: z.string(),
+  // type: z.enum(['income', 'outcome']),
+})
+
+type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 
 export default function NewTransactionModal() {
   const [transactionType, setTransactionType] = useState<string | undefined>('')
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<NewTransactionFormInputs>({
+    resolver: zodResolver(newTransactionFormSchema),
+  })
 
   function handleTransactionType(value: string) {
     setTransactionType(value)
+  }
+
+  async function handleCreateANewTransaction(data: NewTransactionFormInputs) {
+    await new Promise((resolve) => setTimeout(() => resolve, 2000))
+    console.log('dados:' + data)
   }
 
   return (
@@ -26,24 +50,32 @@ export default function NewTransactionModal() {
           </button>
         </Dialog.Close>
 
-        <form action="" className="mt-8 flex flex-col gap-4">
+        <form
+          onSubmit={handleSubmit(handleCreateANewTransaction)}
+          className="mt-8 flex flex-col gap-4"
+        >
           <input
             className="rounded-md bg-zinc-900 p-4 text-zinc-300 placeholder:text-zinc-500"
             type="text"
             placeholder="Descrição"
             required
+            {...register('description')}
           />
           <input
             className="rounded-md bg-zinc-900 p-4 text-zinc-300 placeholder:text-zinc-500"
             type="number"
             placeholder="Preço"
             required
+            {...register('price', {
+              valueAsNumber: true,
+            })}
           />
           <input
             className="rounded-md bg-zinc-900 p-4 text-zinc-300 placeholder:text-zinc-500"
             type="text"
             placeholder="Categoria"
             required
+            {...register('category')}
           />
 
           <RadioGroup.Root className="mt-2 grid grid-cols-2 gap-4">
@@ -72,8 +104,9 @@ export default function NewTransactionModal() {
           </RadioGroup.Root>
 
           <button
+            disabled={isSubmitting}
             type="submit"
-            className="mt-6 h-14 rounded-md bg-emerald-500 px-5 font-bold text-white transition-colors duration-200 hover:cursor-pointer hover:bg-emerald-700"
+            className="mt-6 h-14 rounded-md bg-emerald-500 px-5 font-bold text-white transition-colors duration-200 hover:cursor-pointer hover:bg-emerald-700 disabled:cursor-not-allowed disabled:text-emerald-500 disabled:opacity-50 disabled:hover:bg-transparent"
           >
             Cadastrar
           </button>
