@@ -10,6 +10,8 @@ import { priceFormatter } from '@/utils/formatter'
 
 export default function Home() {
   const { transactions } = useTransaction()
+  const currentDate = new Date()
+  console.log(currentDate)
 
   return (
     <div>
@@ -27,6 +29,7 @@ export default function Home() {
                   key={transaction.id}
                   className="w-full max-w-full rounded-md bg-zinc-900 hover:bg-zinc-800/80"
                 >
+                  <td>{format(transaction.createdAt, 'MM/dd/yyyy')}</td>
                   <td className="w-1/2 px-8 py-5">{transaction.description}</td>
                   <td className="px-8 py-5 text-left">
                     <PriceHighlight variant={transaction.type}>

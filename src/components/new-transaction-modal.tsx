@@ -1,18 +1,19 @@
 'use client'
 
-import { zodResolver } from '@hookform/resolvers/zod'
 import * as Dialog from '@radix-ui/react-dialog'
 import * as RadioGroup from '@radix-ui/react-radio-group'
+import * as z from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { CircleArrowDown, CircleArrowUp, X } from 'lucide-react'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import * as z from 'zod'
+import { Controller, useForm } from 'react-hook-form'
+import { api } from '@/lib/api'
 
 const newTransactionFormSchema = z.object({
   description: z.string(),
   price: z.number(),
   category: z.string(),
-  // type: z.enum(['income', 'outcome']),
+  type: z.enum(['income', 'outcome']),
 })
 
 type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
@@ -20,8 +21,10 @@ type NewTransactionFormInputs = z.infer<typeof newTransactionFormSchema>
 export default function NewTransactionModal() {
   const [transactionType, setTransactionType] = useState<string | undefined>('')
   const {
+    control,
     register,
     handleSubmit,
+    reset,
     formState: { isSubmitting },
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(newTransactionFormSchema),
@@ -32,15 +35,26 @@ export default function NewTransactionModal() {
   }
 
   async function handleCreateANewTransaction(data: NewTransactionFormInputs) {
-    await new Promise((resolve) => setTimeout(() => resolve, 2000))
-    console.log('dados:' + data)
+    await new Promise((resolve) => setTimeout(resolve, 2000))
+
+    const { category, price, description, type } = data
+
+    await api.post('/transactions', {
+      category,
+      price,
+      description,
+      type,
+      createdAt: new Date(),
+    })
+
+    reset()
   }
 
   return (
     <Dialog.Portal>
       <Dialog.Overlay className="fixed inset-0 h-screen w-screen bg-black/75 backdrop-blur-md" />
       <Dialog.Content className="fixed left-1/2 top-1/2 min-w-[32rem] -translate-x-1/2 -translate-y-1/2 rounded-md bg-zinc-800 px-12 py-10 shadow-shape">
-        <Dialog.Title className="text-xl font-bold">
+        <Dialog.Title className="text-2xl font-bold">
           Nova transação
         </Dialog.Title>
 
@@ -78,35 +92,46 @@ export default function NewTransactionModal() {
             {...register('category')}
           />
 
-          <RadioGroup.Root className="mt-2 grid grid-cols-2 gap-4">
-            <RadioGroup.Item
-              onClick={() => handleTransactionType('income')}
-              id="income"
-              value="income"
-              className={`flex items-center justify-center gap-2 rounded-md p-4 transition-all duration-200 ${transactionType === 'income' ? 'bg-emerald-500 text-white' : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'}`}
-            >
-              <CircleArrowUp
-                className={`text-emerald-500 ${transactionType === 'income' && 'text-white'}`}
-              />
-              Entrada
-            </RadioGroup.Item>
-            <RadioGroup.Item
-              onClick={() => handleTransactionType('outcome')}
-              id="outcome"
-              value="outcome"
-              className={`flex items-center justify-center gap-2 rounded-md p-4 transition-all duration-200 ${transactionType === 'outcome' ? 'bg-red-500 text-white' : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'}`}
-            >
-              <CircleArrowDown
-                className={`text-red-500 ${transactionType === 'outcome' && 'text-white'}`}
-              />
-              Saída
-            </RadioGroup.Item>
-          </RadioGroup.Root>
+          <Controller
+            control={control}
+            name="type"
+            render={({ field }) => {
+              return (
+                <RadioGroup.Root
+                  onValueChange={field.onChange}
+                  className="mt-2 grid grid-cols-2 gap-4"
+                >
+                  <RadioGroup.Item
+                    onClick={() => handleTransactionType('income')}
+                    id="income"
+                    value="income"
+                    className={`flex items-center justify-center gap-2 rounded-md p-4 transition-all duration-200 ${transactionType === 'income' ? 'bg-emerald-500 text-white' : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'}`}
+                  >
+                    <CircleArrowUp
+                      className={`text-emerald-500 ${transactionType === 'income' && 'text-white'}`}
+                    />
+                    Entrada
+                  </RadioGroup.Item>
+                  <RadioGroup.Item
+                    onClick={() => handleTransactionType('outcome')}
+                    id="outcome"
+                    value="outcome"
+                    className={`flex items-center justify-center gap-2 rounded-md p-4 transition-all duration-200 ${transactionType === 'outcome' ? 'bg-red-500 text-white' : 'bg-zinc-700 text-zinc-300 hover:bg-zinc-600'}`}
+                  >
+                    <CircleArrowDown
+                      className={`text-red-500 ${transactionType === 'outcome' && 'text-white'}`}
+                    />
+                    Saída
+                  </RadioGroup.Item>
+                </RadioGroup.Root>
+              )
+            }}
+          />
 
           <button
             disabled={isSubmitting}
             type="submit"
-            className="mt-6 h-14 rounded-md bg-emerald-500 px-5 font-bold text-white transition-colors duration-200 hover:cursor-pointer hover:bg-emerald-700 disabled:cursor-not-allowed disabled:text-emerald-500 disabled:opacity-50 disabled:hover:bg-transparent"
+            className="mt-6 h-14 rounded-md bg-emerald-500 px-5 font-bold text-white transition-colors duration-200 hover:cursor-pointer hover:bg-emerald-700 disabled:cursor-not-allowed disabled:border disabled:border-emerald-500 disabled:bg-transparent disabled:text-emerald-500 disabled:opacity-50 disabled:hover:text-emerald-500"
           >
             Cadastrar
           </button>

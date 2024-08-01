@@ -1,5 +1,6 @@
 'use client'
 
+import { api } from '@/lib/api'
 import {
   ReactNode,
   createContext,
@@ -19,6 +20,7 @@ interface TransactionsProps {
 
 interface TransactionContextType {
   transactions: TransactionsProps[]
+  fetchTransactions: (query?: string) => Promise<void>
 }
 
 const TransactionsContext = createContext({} as TransactionContextType)
@@ -26,19 +28,24 @@ const TransactionsContext = createContext({} as TransactionContextType)
 export function TransactionsProvider({ children }: { children: ReactNode }) {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([])
 
-  async function loadTransactions() {
-    const response = await fetch('http://localhost:3333/transactions')
-    const data = await response.json()
+  async function fetchTransactions(query?: string) {
+    const response = await api.get('/transactions', {
+      params: {
+        _sort: 'createdAt',
+        _order: 'desc',
+        q: query,
+      },
+    })
 
-    setTransactions(data)
+    setTransactions(response.data)
   }
 
   useEffect(() => {
-    loadTransactions()
+    fetchTransactions()
   }, [])
 
   return (
-    <TransactionsContext.Provider value={{ transactions }}>
+    <TransactionsContext.Provider value={{ transactions, fetchTransactions }}>
       {children}
     </TransactionsContext.Provider>
   )

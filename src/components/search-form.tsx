@@ -1,3 +1,4 @@
+import { useTransaction } from '@/contexts/transactions-context'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Search } from 'lucide-react'
 import { useForm } from 'react-hook-form'
@@ -18,15 +19,17 @@ export default function SearchForm() {
     resolver: zodResolver(searchFormSchema),
   })
 
-  async function handleSubmitTransactions(data: SearchFormInputs) {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
+  const { fetchTransactions } = useTransaction()
 
+  async function handleSearchTransactions(data: SearchFormInputs) {
     console.log(data)
+
+    await fetchTransactions(data.query)
   }
 
   return (
     <form
-      onSubmit={handleSubmit(handleSubmitTransactions)}
+      onSubmit={handleSubmit(handleSearchTransactions)}
       className="mx-auto mt-16 flex max-w-6xl items-center gap-2"
     >
       <div className="flex flex-1 items-center gap-3 rounded-md bg-zinc-900 px-4 py-4">
