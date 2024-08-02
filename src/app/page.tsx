@@ -9,6 +9,9 @@ import SearchForm from '@/components/search-form'
 import Summary from '@/components/summary'
 import { priceFormatter } from '@/utils/formatter'
 import EditTransactionModal from '@/components/edit-transaction-modal'
+import { Trash2 } from 'lucide-react'
+import { api } from '@/lib/api'
+import { toast } from 'sonner'
 
 export default function Home() {
   const { transactions } = useTransaction()
@@ -24,9 +27,22 @@ export default function Home() {
       locale: ptBR,
     })
 
-    console.log(dateFormatted)
-
     return dateFormatted
+  }
+
+  async function deleteTransaction(transactionId: number) {
+    await api
+      .delete(`/transactions/${transactionId}`)
+      .then((response) => {
+        console.log(response)
+        toast.success(
+          `Transação de ID: ${transactionId} foi excluída com sucesso!`,
+        )
+      })
+      .catch((error) => {
+        console.error(error)
+        toast.error('Ops, algo deu errado ao tentar excluir...')
+      })
   }
 
   return (
@@ -46,19 +62,30 @@ export default function Home() {
                   className="w-full max-w-full rounded-md bg-zinc-900 hover:bg-zinc-800/80"
                 >
                   <td className="w-2/5 px-8 py-5">{transaction.description}</td>
-                  <td className="px-8 py-5 text-left">
+                  <td className="px-2 py-5 text-left">
                     <PriceHighlight variant={transaction.type}>
                       {priceFormatter.format(transaction.price)}
                     </PriceHighlight>
                   </td>
-                  <td className="px-8 py-5 text-left">
+                  <td className="px-2 py-5 text-left">
                     {transaction.category}
                   </td>
-                  <td className="px-8 py-5 text-left">
+                  <td className="px-2 py-5 text-left">
                     {dateFormat(transaction.createdAt)}
                   </td>
-                  <td className="items-center px-8 py-5 text-left">
-                    <EditTransactionModal />
+
+                  <td className="flex items-center justify-end gap-2 px-8 py-5 text-left">
+                    <button
+                      onClick={() => deleteTransaction(transaction.id)}
+                      className="px-2 py-2"
+                    >
+                      <Trash2 className="size-5" />
+                    </button>
+
+                    <EditTransactionModal
+                      transaction={transaction}
+                      idTransaction={String(transaction.id)}
+                    />
                   </td>
                 </tr>
               )
