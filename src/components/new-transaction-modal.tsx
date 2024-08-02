@@ -8,6 +8,8 @@ import { CircleArrowDown, CircleArrowUp, X } from 'lucide-react'
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { api } from '@/lib/api'
+import { toast } from 'sonner'
+import { useTransaction } from '@/contexts/transactions-context'
 
 const newTransactionFormSchema = z.object({
   description: z.string(),
@@ -29,6 +31,7 @@ export default function NewTransactionModal() {
   } = useForm<NewTransactionFormInputs>({
     resolver: zodResolver(newTransactionFormSchema),
   })
+  const { refreshTransactions } = useTransaction()
 
   function handleTransactionType(value: string) {
     setTransactionType(value)
@@ -39,13 +42,23 @@ export default function NewTransactionModal() {
 
     const { category, price, description, type } = data
 
-    await api.post('/transactions', {
-      category,
-      price,
-      description,
-      type,
-      createdAt: new Date(),
-    })
+    await api
+      .post('/transactions', {
+        category,
+        price,
+        description,
+        type,
+        createdAt: new Date(),
+      })
+      .then((response) => {
+        console.log(response.status)
+        toast.success('Transação criada com sucesso!')
+        refreshTransactions()
+      })
+      .catch((error) => {
+        console.error(error)
+        toast.success('Ops, algo deu errado!')
+      })
 
     reset()
   }
