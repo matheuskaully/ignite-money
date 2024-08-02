@@ -21,31 +21,43 @@ interface TransactionsProps {
 interface TransactionContextType {
   transactions: TransactionsProps[]
   fetchTransactions: (query?: string) => Promise<void>
+  refreshTransactions: () => void
 }
 
 const TransactionsContext = createContext({} as TransactionContextType)
 
 export function TransactionsProvider({ children }: { children: ReactNode }) {
   const [transactions, setTransactions] = useState<TransactionsProps[]>([])
+  const [refresh, setRefresh] = useState<boolean>(false)
 
   async function fetchTransactions(query?: string) {
     const response = await api.get('/transactions', {
       params: {
-        _sort: 'createdAt',
-        _order: 'desc',
         q: query,
       },
     })
+    const sortedTransactions = response.data.sort(
+      (a: TransactionsProps, b: TransactionsProps) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime(),
+    )
 
-    setTransactions(response.data)
+    console.log(response.data)
+
+    setTransactions(sortedTransactions)
   }
 
   useEffect(() => {
     fetchTransactions()
-  }, [])
+  }, [refresh])
+
+  const refreshTransactions = () => {
+    setRefresh(!refresh)
+  }
 
   return (
-    <TransactionsContext.Provider value={{ transactions, fetchTransactions }}>
+    <TransactionsContext.Provider
+      value={{ transactions, fetchTransactions, refreshTransactions }}
+    >
       {children}
     </TransactionsContext.Provider>
   )
