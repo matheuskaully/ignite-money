@@ -1,36 +1,12 @@
 {
   "transactions": [
     {
-      "id": "1",
-      "description": "Smartphone Samsung Galaxy s24+ 480gb",
-      "type": "outcome",
-      "category": "Compra",
-      "price": 5899,
-      "createdAt": "2024-07-24T19:06:26.097Z"
-    },
-    {
       "id": "2",
       "description": "Monitor Asus Tuf VG249Q 144hz Gaming",
       "type": "income",
       "category": "Venda",
-      "price": 1299,
+      "price": 1599,
       "createdAt": "2024-07-21T12:06:26.097Z"
-    },
-    {
-      "id": "3",
-      "description": "Laptop Dell XPS 13",
-      "type": "outcome",
-      "category": "Compra",
-      "price": 7899,
-      "createdAt": "2024-07-18T08:30:00.000Z"
-    },
-    {
-      "id": "4",
-      "description": "Headset HyperX Cloud II",
-      "type": "income",
-      "category": "Venda",
-      "price": 499,
-      "createdAt": "2024-07-20T10:15:00.000Z"
     },
     {
       "id": "5",
@@ -41,20 +17,12 @@
       "createdAt": "2024-07-22T14:45:00.000Z"
     },
     {
-      "id": "6",
-      "description": "Mouse Razer DeathAdder Elite",
-      "type": "income",
-      "category": "Venda",
-      "price": 399,
-      "createdAt": "2024-07-19T09:00:00.000Z"
-    },
-    {
       "id": "7",
-      "description": "Monitor LG UltraWide 34\"",
-      "type": "outcome",
+      "description": "Monitor LG UltraWide 27 280hz",
       "category": "Compra",
-      "price": 2499,
-      "createdAt": "2024-07-16T11:25:00.000Z"
+      "price": 2899,
+      "type": "outcome",
+      "createdAt": "2024-07-22T14:45:00.000Z"
     },
     {
       "id": "8",
@@ -65,65 +33,52 @@
       "createdAt": "2024-07-23T13:40:00.000Z"
     },
     {
-      "id": "9",
-      "description": "Tablet Apple iPad Pro 12.9\"",
-      "type": "outcome",
+      "id": "c830",
       "category": "Compra",
-      "price": 10999,
-      "createdAt": "2024-07-17T15:50:00.000Z"
-    },
-    {
-      "id": "10",
-      "description": "Smartwatch Garmin Fenix 6",
-      "type": "income",
-      "category": "Venda",
-      "price": 2999,
-      "createdAt": "2024-07-21T17:05:00.000Z"
-    },
-    {
-      "id": "892832",
-      "description": "teste",
-      "type": "income",
-      "category": "testezao",
-      "price": 222,
-      "createdAt": "2024-07-26T20:06:41.815Z"
-    },
-    {
-      "id": "6776",
-      "category": "compra",
-      "price": 66,
-      "description": "teste",
-      "type": "income"
-    },
-    {
-      "id": "deb5",
-      "category": "Comida",
-      "price": 10,
-      "description": "Monster Energy Drink",
-      "type": "outcome"
-    },
-    {
-      "id": "ed46",
-      "category": "Comida",
-      "price": 12,
-      "description": "Redbull 320ML",
-      "type": "outcome"
-    },
-    {
-      "id": "c03b",
-      "category": "Comida",
-      "price": 10,
-      "description": "Monster Energy Drink",
-      "type": "income",
-      "createdAt": "2024-08-01T20:04:24.129Z"
-    },
-    {
-      "id": "08f7",
-      "category": "Comida",
-      "price": 10,
-      "description": "Monster Energy Drink",
+      "price": 27,
+      "description": "Pacote de arroz 5kg",
       "type": "outcome",
-      "createdAt": "2024-08-01T20:27:29.695Z"
+      "createdAt": "2024-08-02T18:54:43.984Z"
+    },
+    {
+      "id": "fa41",
+      "category": "Trabalho",
+      "price": 1200,
+      "description": "Desenvolvimento de e-commerce",
+      "type": "income",
+      "createdAt": "2024-08-02T18:59:14.817Z"
+    },
+    {
+      "id": "0d89",
+      "category": "Compra",
+      "price": 599,
+      "description": "Anker Soundcore Motion Boom",
+      "type": "outcome",
+      "createdAt": "2024-08-02T19:00:01.500Z"
+    },
+    {
+      "id": "67c3",
+      "category": "Compra",
+      "price": 4199,
+      "description": "Samsung Galaxy Note 20 256gb",
+      "type": "outcome",
+      "createdAt": "2024-08-02T20:07:48.109Z"
+    },
+    {
+      "id": "b45e",
+      "category": "Compra",
+      "price": 1,
+      "description": "Pacoça",
+      "type": "outcome",
+      "createdAt": "2024-08-02T20:09:44.416Z"
+    },
+    {
+      "id": "ee1f",
+      "category": "Venda",
+      "price": 2099,
+      "description": "Samsung Galaxy Note 21 256gb (usado)",
+      "type": "income",
+      "createdAt": "2024-08-02T20:16:50.126Z"
     }
   ]
 }
