@@ -3,15 +3,31 @@
 import { PriceHighlight } from '@/components/price-highlight'
 import { useTransaction } from '@/contexts/transactions-context'
 import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
 import Header from '@/components/header'
 import SearchForm from '@/components/search-form'
 import Summary from '@/components/summary'
 import { priceFormatter } from '@/utils/formatter'
+import EditTransactionModal from '@/components/edit-transaction-modal'
 
 export default function Home() {
   const { transactions } = useTransaction()
-  const currentDate = new Date()
-  console.log(currentDate)
+
+  function dateFormat(date: string) {
+    const dateString = new Date(date)
+
+    if (isNaN(dateString.getTime())) {
+      return
+    }
+
+    const dateFormatted = format(new Date(date), "d 'de' MMMM 'de' yyyy", {
+      locale: ptBR,
+    })
+
+    console.log(dateFormatted)
+
+    return dateFormatted
+  }
 
   return (
     <div>
@@ -29,8 +45,7 @@ export default function Home() {
                   key={transaction.id}
                   className="w-full max-w-full rounded-md bg-zinc-900 hover:bg-zinc-800/80"
                 >
-                  <td>{format(transaction.createdAt, 'MM/dd/yyyy')}</td>
-                  <td className="w-1/2 px-8 py-5">{transaction.description}</td>
+                  <td className="w-2/5 px-8 py-5">{transaction.description}</td>
                   <td className="px-8 py-5 text-left">
                     <PriceHighlight variant={transaction.type}>
                       {priceFormatter.format(transaction.price)}
@@ -40,7 +55,10 @@ export default function Home() {
                     {transaction.category}
                   </td>
                   <td className="px-8 py-5 text-left">
-                    {format(transaction.createdAt, 'dd/MM/yyyy')}
+                    {dateFormat(transaction.createdAt)}
+                  </td>
+                  <td className="items-center px-8 py-5 text-left">
+                    <EditTransactionModal />
                   </td>
                 </tr>
               )
